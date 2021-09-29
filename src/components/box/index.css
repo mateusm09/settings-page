@@ -1,0 +1,25 @@
+.top {
+	background-color: #242424;
+	padding: 20px;
+	max-width: 500vh;
+	border-radius: 10px;
+}
+
+.top button {
+	margin-top: 20px;
+}
+
+.top a {
+	text-decoration: none;
+	color: #000;
+}
+
+.top h1 {
+	color: #fff;
+	font-size: 25px;
+}
+
+.top p {
+	color: #fff9;
+	font-size: 15px;
+}

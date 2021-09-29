@@ -1,0 +1,12 @@
+button {
+	background-color: #aaf9a8;
+	border: 0px;
+	padding: 10px;
+	font-weight: bold;
+	max-width: 200px;
+	border-radius: 5px;
+}
+
+button:active {
+	opacity: 0.6;
+}
