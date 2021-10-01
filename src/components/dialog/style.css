@@ -1,0 +1,22 @@
+.container {
+    width: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    border-radius: 10px;
+    position: absolute;
+    top: 10vh;
+    animation: slidein 0.5s;
+
+}
+
+@keyframes slidein { 
+    from {
+        top: 0vh
+    }
+
+    to {
+        top: 10vh
+    }
+}

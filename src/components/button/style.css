@@ -1,12 +1,29 @@
-button {
+.button {
 	background-color: #aaf9a8;
 	border: 0px;
 	padding: 10px;
 	font-weight: bold;
-	max-width: 200px;
+	/* max-width: 200px; */
 	border-radius: 5px;
+    width: 100%;
 }
 
-button:active {
+.button:active {
 	opacity: 0.6;
+}
+
+.loading { 
+    animation: rotate 1.5s infinite;
+    justify-content: center;
+    align-items: center;
+}
+
+@keyframes rotate { 
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
 }

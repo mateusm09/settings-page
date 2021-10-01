@@ -1,12 +1,12 @@
+import { route } from "preact-router";
 import { useRef, useState } from "preact/hooks";
 import background from "../../components/background";
 import box from "../../components/box";
 import Button from "../../components/button";
 import Input from "../../components/input";
 import Dialog from "../../components/dialog";
-import { route } from "preact-router";
 
-const WifiLocal = props => {
+const WifiHub = props => {
 	const [ssid, setSsid] = useState("");
 	const [password, setPassword] = useState("");
 	const [loading, setLoading] = useState(false);
@@ -20,37 +20,40 @@ const WifiLocal = props => {
 			if (ssid.length > 0) {
 				// TODO send SSID to Hub
 			} else {
-                dialogRef.current.showDialog({ text: "Insira o SSID da rede", error: true });
-                setLoading(false);
+				dialogRef.current.showDialog({ text: "Insira o SSID da rede", error: true });
+				setLoading(false);
 				return;
 			}
 
 			if (password.length >= 8) {
 				// TODO send password to Hub
 			} else {
-                dialogRef.current.showDialog({ text: "A senha precisa ter no mínimo 8 caracteres", error: true });
-                setLoading(false);
+				dialogRef.current.showDialog({ text: "A senha precisa ter no mínimo 8 caracteres", error: true });
+				setLoading(false);
 				return;
 			}
 
 			dialogRef.current.showDialog({ text: "Salvo com sucesso" });
-			setTimeout(() => route("/wifihub"), 2000);
+			setTimeout(() => route("/save"), 2000);
 		} catch (error) {
 			dialogRef.current.showDialog({ text: "Erro ao salvar", error: true });
-			setLoading(false);
 		}
+		setLoading(false);
 	}
 
 	return (
 		<div class={background.container}>
 			<div class={box.top}>
-				<h1>Seu Wi-Fi</h1>
-				<p>Aqui você irá configurar a rede Wi-Fi em que o seu Hub irá se conectar</p>
+				<h1>Wi-Fi do Hub</h1>
+				<p>
+					Aqui você irá configurar a rede Wi-Fi que o seu Hub irá cria. Para sua segurança, evite senhas como
+					12345678
+				</p>
 				<form onSubmit={onSubmit}>
-					<Input onChange={e => setSsid(e.target.value)} title={"Nome do seu Wi-Fi"} />
+					<Input onChange={e => setSsid(e.target.value)} title={"Nome do Wi-Fi do Hub"} />
 					<Input
 						onChange={e => setPassword(e.target.value)}
-						title={"Senha do seu Wi-Fi"}
+						title={"Senha do Wi-Fi di Hub"}
 						type="password"
 						secureEntry
 					/>
@@ -63,4 +66,4 @@ const WifiLocal = props => {
 	);
 };
 
-export default WifiLocal;
+export default WifiHub;

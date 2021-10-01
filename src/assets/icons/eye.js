@@ -1,5 +1,3 @@
-import * as React from "react";
-
 function EyeIcon(props) {
 	const { size, color } = props;
 

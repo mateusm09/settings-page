@@ -1,5 +1,3 @@
-import * as React from "react";
-
 function EyeSlashIcon(props) {
 	const { size, color } = props;
 
