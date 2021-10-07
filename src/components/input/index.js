@@ -1,6 +1,6 @@
 import { useState } from "preact/hooks";
-import EyeIcon from "../../assets/icons/eye";
-import EyeSlashIcon from "../../assets/icons/eyeSlash";
+import EyeIcon from "../icons/eye";
+import EyeSlashIcon from "../icons/eyeSlash";
 import style from "./style.css";
 
 const Input = props => {

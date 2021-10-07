@@ -13,25 +13,31 @@ const WifiHub = props => {
 
 	const dialogRef = useRef();
 
-	function onSubmit(event) {
+	async function onSubmit(event) {
 		event.preventDefault();
 		setLoading(true);
 		try {
-			if (ssid.length > 0) {
-				// TODO send SSID to Hub
-			} else {
+			if (ssid.length <= 0) {
 				dialogRef.current.showDialog({ text: "Insira o SSID da rede", error: true });
 				setLoading(false);
 				return;
 			}
 
-			if (password.length >= 8) {
-				// TODO send password to Hub
-			} else {
+			if (password.length < 8) {
 				dialogRef.current.showDialog({ text: "A senha precisa ter no mínimo 8 caracteres", error: true });
 				setLoading(false);
 				return;
 			}
+
+			const res = await fetch("http://192.168.1.163:80/local", {
+				method: "POST",
+				body: {
+					ssid,
+					password,
+				},
+			});
+
+			console.log("FETCH RESULT", res);
 
 			dialogRef.current.showDialog({ text: "Salvo com sucesso" });
 			setTimeout(() => route("/save"), 2000);
@@ -53,7 +59,7 @@ const WifiHub = props => {
 					<Input onChange={e => setSsid(e.target.value)} title={"Nome do Wi-Fi do Hub"} />
 					<Input
 						onChange={e => setPassword(e.target.value)}
-						title={"Senha do Wi-Fi di Hub"}
+						title={"Senha do Wi-Fi do Hub"}
 						type="password"
 						secureEntry
 					/>

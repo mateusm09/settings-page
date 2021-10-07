@@ -1,4 +1,4 @@
-import { useRef, useState } from "preact/hooks";
+import { useEffect, useRef, useState } from "preact/hooks";
 import background from "../../components/background";
 import box from "../../components/box";
 import Button from "../../components/button";
@@ -10,28 +10,48 @@ const WifiLocal = props => {
 	const [ssid, setSsid] = useState("");
 	const [password, setPassword] = useState("");
 	const [loading, setLoading] = useState(false);
+	const [wifis, setWifis] = useState([]);
 
 	const dialogRef = useRef();
 
-	function onSubmit(event) {
+	useEffect(async () => {
+		try {
+			const res = await fetch("http://192.168.1.163:80/wifis");
+			const str = await res.text();
+
+			console.log("TEXT", str);
+			const array = JSON.parse(str);
+
+			console.log("WIFIs", array);
+		} catch (error) {
+			console.log("ERROR", error);
+		}
+	}, []);
+
+	async function onSubmit(event) {
 		event.preventDefault();
 		setLoading(true);
 		try {
-			if (ssid.length > 0) {
-				// TODO send SSID to Hub
-			} else {
-                dialogRef.current.showDialog({ text: "Insira o SSID da rede", error: true });
-                setLoading(false);
+			if (ssid.length <= 0) {
+				dialogRef.current.showDialog({ text: "Insira o SSID da rede", error: true });
+				setLoading(false);
 				return;
 			}
 
-			if (password.length >= 8) {
-				// TODO send password to Hub
-			} else {
-                dialogRef.current.showDialog({ text: "A senha precisa ter no mínimo 8 caracteres", error: true });
-                setLoading(false);
+			if (password.length <= 8) {
+				dialogRef.current.showDialog({ text: "A senha precisa ter no mínimo 8 caracteres", error: true });
+				setLoading(false);
 				return;
 			}
+
+			await fetch({
+				url: "http://192.168.1.163:80/local",
+				method: "POST",
+				body: {
+					ssid,
+					password,
+				},
+			});
 
 			dialogRef.current.showDialog({ text: "Salvo com sucesso" });
 			setTimeout(() => route("/wifihub"), 2000);

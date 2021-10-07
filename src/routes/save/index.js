@@ -9,11 +9,20 @@ const Save = () => {
 	const [loading, setLoading] = useState(false);
 	const dialogRef = useRef();
 
-	function onClick() {
+	async function onClick() {
 		setLoading(true);
 
 		try {
-			// TODO send save message
+			const res = await fetch({
+				url: "http://192.168.1.163:80/save",
+				method: "POST",
+				body: {
+					save: true,
+				},
+			});
+
+			console.log("RESPONSE", res);
+
 			dialogRef.current.showDialog({ text: "Salvo com sucesso" });
 		} catch (error) {
 			dialogRef.current.showDialog({ text: "Erro ao salvar", error: true });

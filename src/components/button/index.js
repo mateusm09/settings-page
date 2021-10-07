@@ -1,5 +1,5 @@
 import style from "./style";
-import Loading from "../../assets/icons/loading";
+import Loading from "../icons/loading";
 
 const Button = props => {
 	const { loading } = props;
