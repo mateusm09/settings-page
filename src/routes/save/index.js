@@ -14,7 +14,7 @@ const Save = () => {
 
 		try {
 			const res = await fetch({
-				url: "http://192.168.1.163:80/save",
+				url: `${host}/save`,
 				method: "POST",
 				body: {
 					save: true,

@@ -5,6 +5,7 @@ import Button from "../../components/button";
 import Input from "../../components/input";
 import Dialog from "../../components/dialog";
 import { route } from "preact-router";
+import { host } from "../../components/app";
 
 const WifiLocal = props => {
 	const [ssid, setSsid] = useState("");
@@ -16,7 +17,8 @@ const WifiLocal = props => {
 
 	useEffect(async () => {
 		try {
-			const res = await fetch("http://192.168.1.163:80/wifis");
+			// const res = await fetch("http://192.168.1.163:80/wifis");
+			const res = await fetch(`${host}/wifis`);
 			const str = await res.text();
 
 			console.log("TEXT", str);
@@ -45,7 +47,7 @@ const WifiLocal = props => {
 			}
 
 			await fetch({
-				url: "http://192.168.1.163:80/local",
+				url: `${host}/local`,
 				method: "POST",
 				body: {
 					ssid,

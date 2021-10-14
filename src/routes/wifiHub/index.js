@@ -29,7 +29,7 @@ const WifiHub = props => {
 				return;
 			}
 
-			const res = await fetch("http://192.168.1.163:80/local", {
+			const res = await fetch(`${host}/local`, {
 				method: "POST",
 				body: {
 					ssid,

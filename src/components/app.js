@@ -1,15 +1,13 @@
-import { h } from "preact";
 import { Router } from "preact-router";
-
-import Header from "./header";
-
 // Code-splitting is automated for `routes` directory
 import Home from "../routes/home";
 import WifiLocal from "../routes/wifiLocal";
 import WifiHub from "../routes/wifiHub";
 import Save from "../routes/save";
-import Navbar from "./navbar";
 import background from "./background";
+
+// export const host = "http://192.168.1.163:80";
+export const host = "http://localhost:80";
 
 const App = () => (
 	<div class={background.container} id="app">
@@ -19,8 +17,6 @@ const App = () => (
 			<WifiHub path="/wifihub" />
 			<Save path="/save" />
 		</Router>
-
-		{/* <Navbar /> */}
 	</div>
 );
 
