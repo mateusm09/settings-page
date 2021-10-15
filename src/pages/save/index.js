@@ -4,6 +4,7 @@ import box from "../../components/box";
 import Dialog from "../../components/dialog";
 
 import { useRef, useState } from "preact/hooks";
+import { host } from "../../components/app";
 
 const Save = () => {
 	const [loading, setLoading] = useState(false);

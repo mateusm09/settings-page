@@ -3,15 +3,14 @@ import { useEffect, useImperativeHandle, useState } from "preact/hooks";
 import style from "./style.css";
 
 const Dialog = (props, ref) => {
-	const { children } = props;
-
 	const [show, setShow] = useState(false);
 	const [timeoutId, setTimeoutId] = useState(-1);
 	const [error, setError] = useState(false);
 	const [text, setText] = useState("");
 
 	useEffect(() => {
-		return () => {
+        return () => {
+            console.log('[DIALOG] CLEARING TIMEOUT');
 			clearTimeout(timeoutId);
 		};
 	}, [timeoutId]);
@@ -35,7 +34,7 @@ const Dialog = (props, ref) => {
 				{text}
 			</div>
 		);
-	else return <></>;
+	return <></>;
 };
 
 export default forwardRef(Dialog);

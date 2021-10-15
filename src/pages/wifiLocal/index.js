@@ -1,17 +1,36 @@
-import { route } from "preact-router";
-import { useRef, useState } from "preact/hooks";
+import { useEffect, useRef, useState } from "preact/hooks";
 import background from "../../components/background";
 import box from "../../components/box";
 import Button from "../../components/button";
 import Input from "../../components/input";
 import Dialog from "../../components/dialog";
+import { host } from "../../components/app";
 
-const WifiHub = props => {
+const WifiLocal = props => {
 	const [ssid, setSsid] = useState("");
 	const [password, setPassword] = useState("");
 	const [loading, setLoading] = useState(false);
+	// const [wifis, setWifis] = useState([]);
 
 	const dialogRef = useRef();
+
+	useEffect(() => {
+		async function func() {
+			try {
+				// const res = await fetch("http://192.168.1.163:80/wifis");
+				const res = await fetch(`${host}/wifis`);
+				const str = await res.text();
+
+				console.log("TEXT", str);
+				const array = JSON.parse(str);
+
+				console.log("WIFIs", array);
+			} catch (error) {
+				console.log("ERROR", error);
+			}
+		}
+		func();
+	}, []);
 
 	async function onSubmit(event) {
 		event.preventDefault();
@@ -23,7 +42,7 @@ const WifiHub = props => {
 				return;
 			}
 
-			if (password.length < 8) {
+			if (password.length <= 8) {
 				dialogRef.current.showDialog({ text: "A senha precisa ter no mínimo 8 caracteres", error: true });
 				setLoading(false);
 				return;
@@ -37,29 +56,27 @@ const WifiHub = props => {
 				},
 			});
 
-			console.log("FETCH RESULT", res);
+			console.log("FETCH RES", res);
 
 			dialogRef.current.showDialog({ text: "Salvo com sucesso" });
-			setTimeout(() => route("/save"), 2000);
+			props.next("/hub");
+			return;
 		} catch (error) {
 			dialogRef.current.showDialog({ text: "Erro ao salvar", error: true });
+			setLoading(false);
 		}
-		setLoading(false);
 	}
 
 	return (
 		<div class={background.container}>
 			<div class={box.top}>
-				<h1>Wi-Fi do Hub</h1>
-				<p>
-					Aqui você irá configurar a rede Wi-Fi que o seu Hub irá cria. Para sua segurança, evite senhas como
-					12345678
-				</p>
+				<h1>Seu Wi-Fi</h1>
+				<p>Aqui você irá configurar a rede Wi-Fi em que o seu Hub irá se conectar</p>
 				<form onSubmit={onSubmit}>
-					<Input onChange={e => setSsid(e.target.value)} title={"Nome do Wi-Fi do Hub"} />
+					<Input onChange={e => setSsid(e.target.value)} title={"Nome do seu Wi-Fi"} />
 					<Input
 						onChange={e => setPassword(e.target.value)}
-						title={"Senha do Wi-Fi do Hub"}
+						title={"Senha do seu Wi-Fi"}
 						type="password"
 						secureEntry
 					/>
@@ -72,4 +89,4 @@ const WifiHub = props => {
 	);
 };
 
-export default WifiHub;
+export default WifiLocal;

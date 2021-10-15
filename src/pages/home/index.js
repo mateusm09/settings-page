@@ -1,14 +1,9 @@
 import { h } from "preact";
-import { Link, route } from "preact-router";
 import Button from "../../components/button";
 import box from "../../components/box";
 import background from "../../components/background";
 
-const Home = () => {
-	function onClick() {
-		route("/wifilocal");
-	}
-
+const Home = props => {
 	return (
 		<div class={background.container}>
 			<div class={box.top}>
@@ -16,7 +11,7 @@ const Home = () => {
 				<p>Nesta página você irá configurar o sistema EnergyIO.</p>
 				<p>Aqui você pode configurar o wifi do seu Hub, bem como parear os seus sensores.</p>
 
-				<Button onClick={onClick}>Vamos lá!</Button>
+				<Button onClick={() => props.next("/local")}>Vamos lá!</Button>
 			</div>
 		</div>
 	);
