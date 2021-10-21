@@ -29,7 +29,7 @@ const WifiHub = props => {
 				return;
 			}
 
-			const res = await fetch(`${host}/hub`, {
+			const res = await fetch(`${host}/ap`, {
 				method: "POST",
 				body: {
 					ssid,
