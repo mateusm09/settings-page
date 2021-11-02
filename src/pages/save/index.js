@@ -4,7 +4,7 @@ import box from "../../components/box";
 import Dialog from "../../components/dialog";
 
 import { useRef, useState } from "preact/hooks";
-import { host } from "../../components/app";
+import { sendSave } from "../../http";
 
 const Save = () => {
 	const [loading, setLoading] = useState(false);
@@ -14,13 +14,7 @@ const Save = () => {
 		setLoading(true);
 
 		try {
-			const res = await fetch({
-				url: `${host}/save`,
-				method: "POST",
-				body: {
-					save: true,
-				},
-			});
+			const res = await sendSave();
 
 			console.log("RESPONSE", res);
 

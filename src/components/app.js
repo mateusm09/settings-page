@@ -7,9 +7,6 @@ import background from "./background";
 import Route from "./Route";
 import { useState } from "preact/hooks";
 
-// export const host = "http://192.168.1.162:80";
-export const host = "http://192.168.4.1:80";
-
 const App = () => {
 	const [currentRoute, setCurrentRoute] = useState("/");
 

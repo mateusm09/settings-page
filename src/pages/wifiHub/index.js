@@ -4,7 +4,7 @@ import box from "../../components/box";
 import Button from "../../components/button";
 import Input from "../../components/input";
 import Dialog from "../../components/dialog";
-import { host } from "../../components/app";
+import { sendWifi } from "../../http";
 
 const WifiHub = props => {
 	const [ssid, setSsid] = useState("");
@@ -29,13 +29,7 @@ const WifiHub = props => {
 				return;
 			}
 
-			const res = await fetch(`${host}/ap`, {
-				method: "POST",
-				body: {
-					ssid,
-					password,
-				},
-			});
+			const res = await sendWifi("/ap", ssid, password);
 
 			console.log("FETCH RESULT", res);
 

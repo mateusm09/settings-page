@@ -4,7 +4,7 @@ import box from "../../components/box";
 import Button from "../../components/button";
 import Input from "../../components/input";
 import Dialog from "../../components/dialog";
-import { host } from "../../components/app";
+import { sendWifi } from "../../http";
 
 const WifiLocal = props => {
 	const [ssid, setSsid] = useState("");
@@ -15,26 +15,25 @@ const WifiLocal = props => {
 	const dialogRef = useRef();
 
 	useEffect(() => {
-		async function func() {
-			try {
-				// const res = await fetch("http://192.168.1.163:80/wifis");
-				const res = await fetch(`${host}/wifis`);
-				const str = await res.text();
-
-				console.log("TEXT", str);
-				const array = JSON.parse(str);
-
-				console.log("WIFIs", array);
-			} catch (error) {
-				console.log("ERROR", error);
-			}
-		}
-		func();
+		// async function func() {
+		// 	try {
+		// 		// const res = await fetch("http://192.168.1.163:80/wifis");
+		// 		const res = await fetch(`${host}/wifis`);
+		// 		const str = await res.text();
+		// 		console.log("TEXT", str);
+		// 		const array = JSON.parse(str);
+		// 		console.log("WIFIs", array);
+		// 	} catch (error) {
+		// 		console.log("ERROR", error);
+		// 	}
+		// }
+		// func();
 	}, []);
 
 	async function onSubmit(event) {
 		event.preventDefault();
 		setLoading(true);
+
 		try {
 			if (ssid.length <= 0) {
 				dialogRef.current.showDialog({ text: "Insira o SSID da rede", error: true });
@@ -42,19 +41,13 @@ const WifiLocal = props => {
 				return;
 			}
 
-			if (password.length <= 8) {
+			if (password.length < 8) {
 				dialogRef.current.showDialog({ text: "A senha precisa ter no mínimo 8 caracteres", error: true });
 				setLoading(false);
 				return;
 			}
 
-			const res = await fetch(`${host}/local`, {
-				method: "POST",
-				body: {
-					ssid,
-					password,
-				},
-			});
+			const res = await sendWifi("/local", ssid, password);
 
 			console.log("FETCH RES", res);
 
